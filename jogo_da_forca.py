@@ -1,4 +1,5 @@
 import random
+import sys
 import time
 
 # Inicio do jogo
@@ -19,7 +20,7 @@ def main():
     global tamanho
     global jogo
     global todas_letras_mencionadas
-    palavra_para_chute = ["jooj"]
+    palavra_para_chute = ["jooj", "cola", "beijo", "calor", "polvo", "brasil", "bela", "horizonte"]
     palavra = random.choice(palavra_para_chute)
     tamanho = len(palavra)
     contador = 0
@@ -31,16 +32,15 @@ def main():
 
 # Loop para reexecutar o jogo quando após sua finalização:
 def jogo_loop():
-    global jogo
-    # jogo = input("Gostaria de continuar ?\ns = sim, n = não\n")
-    while jogo != ["S", "s", "n", "N"]:
+    jogo = ''
+    while jogo.lower() not in ["s", "n"]:
         jogo = input("Gostaria de continuar ?\ns = sim, n = não\n")
-        if jogo == "s" or "S":
+        if jogo == "s":
             main()
             jogo_da_forca()
-        elif jogo == "n" or "N":
+        elif jogo == "n":
             print("Obrigado por Jogar! \n Desenvolvido por Guilherme Silveira")
-            exit()
+            sys.exit()
 
 
 def jogo_da_forca():
@@ -65,9 +65,14 @@ def jogo_da_forca():
         palavra = palavra[:indicie] + "_" + palavra[indicie + 1:]
         mostrador = mostrador[:indicie] + chute + mostrador[indicie + 1:]
         print(mostrador + "\n")
+        print(f"Letras mencionadas: {todas_letras_mencionadas}")
+
+
 
     elif chute in chute_mencionado:
+        print()
         print("Letra já mencionada, tente outra vez\n")
+        print()
 
     else:
         contador += 1
@@ -161,3 +166,4 @@ main()
 
 jogo_da_forca()
 
+jogo_loop()
