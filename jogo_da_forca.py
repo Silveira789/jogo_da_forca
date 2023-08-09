@@ -15,14 +15,16 @@ print()
 def main():
     global contador
     global mostrador
-    global palavra
+    global palavra_sorteada
     global chute_mencionado
     global tamanho
     global jogo
     global todas_letras_mencionadas
-    palavra_para_chute = ["jooj", "cola", "beijo", "calor", "polvo", "brasil", "bela", "horizonte"]
-    palavra = random.choice(palavra_para_chute)
-    tamanho = len(palavra)
+    global palavra_view
+    palavra_para_chute = ["cola", "laranja", 'caneta', 'azul', 'mato', "beijo", "calor", "polvo", "brasil", "bela", "horizonte"]
+    palavra_sorteada = random.choice(palavra_para_chute)
+    palavra_view = palavra_sorteada
+    tamanho = len(palavra_sorteada)
     contador = 0
     mostrador = '_' * tamanho
     chute_mencionado = []
@@ -46,10 +48,12 @@ def jogo_loop():
 def jogo_da_forca():
     global contador
     global mostrador
-    global palavra
+    global palavra_sorteada
     global chute_mencionado
     global jogo
     global todas_letras_mencionadas
+
+
     limite = 5
     chute = input(f"Está é a palavra secreta: {mostrador}\nDigite a letra sugerida: ")
     todas_letras_mencionadas.extend([chute])
@@ -59,10 +63,10 @@ def jogo_da_forca():
         print("Opção inválida, tente outra letra\n")
         jogo_da_forca()
 
-    elif chute in palavra:
+    elif chute in palavra_sorteada:
         chute_mencionado.extend([chute])
-        indicie = palavra.find(chute)
-        palavra = palavra[:indicie] + "_" + palavra[indicie + 1:]
+        indicie = palavra_sorteada.find(chute)
+        palavra_sorteada = palavra_sorteada[:indicie] + "_" + palavra_sorteada[indicie + 1:]
         mostrador = mostrador[:indicie] + chute + mostrador[indicie + 1:]
         print(mostrador + "\n")
         print(f"Letras mencionadas: {todas_letras_mencionadas}")
@@ -87,7 +91,7 @@ def jogo_da_forca():
                   "  |      \n"
                   "  |      \n"
                   "__|__\n")
-            print("Wrong guess. " + str(limite - contador) + " guesses remaining\n")
+            print("Palpite errado. " + str(limite - contador) + " chances restantes\n")
             print()
             print(f"Letras mencionadas: {todas_letras_mencionadas}")
             print("========================================================================")
@@ -102,7 +106,7 @@ def jogo_da_forca():
                   "  |      \n"
                   "  |      \n"
                   "__|__\n")
-            print("Wrong guess. " + str(limite - contador) + " guesses remaining\n")
+            print("Palpite errado. " + str(limite - contador) + " chances restantes\n")
             print()
             print(f"Letras mencionadas: {todas_letras_mencionadas}")
             print("========================================================================")
@@ -118,7 +122,7 @@ def jogo_da_forca():
                   "  |      \n"
                   "  |      \n"
                   "__|__\n")
-            print("Wrong guess. " + str(limite - contador) + " guesses remaining\n")
+            print("Palpite errado. " + str(limite - contador) + " chances restantes \n")
             print()
             print(f"Letras mencionadas: {todas_letras_mencionadas}")
             print("========================================================================")
@@ -134,7 +138,7 @@ def jogo_da_forca():
                   "  |      \n"
                   "  |      \n"
                   "__|__\n")
-            print("Wrong guess. " + str(limite - contador) + " last guess remaining\n")
+            print("Palpite errado. " + str(limite - contador) + " chance restante\n")
             print()
             print(todas_letras_mencionadas)
             print("========================================================================")
@@ -150,17 +154,19 @@ def jogo_da_forca():
                   "  |    /|\ \n"
                   "  |    / \ \n"
                   "__|__\n")
-            print("Wrong guess. You are hanged!!!\n")
-            print("The palavra was:", chute_mencionado, palavra)
+            print("Chute errado. Você perdeu!!!\n")
+            print("A palavra era:", palavra_view)
             jogo_loop()
 
-    if palavra == '_' * tamanho:
+    if palavra_sorteada == '_' * tamanho:
         print("Parabens! Você descobriu a palavra!")
         jogo_loop()
 
     elif contador != limite:
         jogo_da_forca()
 
+
+# Execução de jogo
 
 main()
 
